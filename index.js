@@ -8,9 +8,7 @@ const stream = fs.createReadStream('./test.csv', { encoding: 'utf8' })
                  .pipe(csv.parse({ delimiter: ';' }));
 
 async function print(readable) {
-  readable.setEncoding('utf8');
   for await (const chunk of readable) {
-    console.log('////');
     console.log(chunk);
   }
 }
