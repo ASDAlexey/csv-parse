@@ -1,8 +1,18 @@
+// https://nodejs.org/download/nightly/v10.0.0-nightly2018033083d44bee01/docs/api/stream.html#stream_readable_asynciterator
+// https://habr.com/post/353886/
+// https://csv.js.org/transform/examples/
 const fs = require('fs');
 const csv = require('csv');
 
-const stream = fs.createReadStream('./test.csv').pipe(csv.parse({ delimiter: ';' }));
+const stream = fs.createReadStream('./test.csv', { encoding: 'utf8' })
+                 .pipe(csv.parse({ delimiter: ';' }));
 
-stream.on('data', (chunk) => {
-  console.log(chunk);
-});
+async function print(readable) {
+  readable.setEncoding('utf8');
+  for await (const chunk of readable) {
+    console.log('////');
+    console.log(chunk);
+  }
+}
+
+print(stream).catch(console.log);
