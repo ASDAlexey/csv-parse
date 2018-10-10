@@ -11,6 +11,8 @@ async function print(readable) {
   for await (const chunk of readable) {
     console.log(chunk);
   }
+
+  return 'done';
 }
 
-print(stream).catch(console.log);
+print(stream).then(console.log).catch(console.log);
